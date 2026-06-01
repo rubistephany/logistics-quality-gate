@@ -1,0 +1,26 @@
+checks for entregas_silver:
+
+  - missing_count(id_entrega) = 0:
+      name: ID Entrega obligatorio
+
+  - missing_count(id_pedido) = 0:
+      name: ID Pedido obligatorio
+
+  - duplicate_count(id_entrega) = 0:
+      name: ID Entrega clave primaria única
+
+  - invalid_count(estado) = 0:
+      valid values: ['ENTREGADO', 'FALLIDO', 'PENDIENTE', 'DEVUELTO']
+      name: Estados permitidos por negocio
+
+  - invalid_count(intentos_entrega) = 0:
+      valid min: 1
+      valid max: 5
+      name: Rango de intentos permitido
+
+  - invalid_count(codigo_postal_destino) = 0:
+      valid format: regex ^\d{5}$
+      name: Formato CP español de 5 dígitos
+
+  - max(fecha_entrega) >= NOW - 48h:
+      name: Alerta: La tabla lleva desactualizada más de 48 horas
